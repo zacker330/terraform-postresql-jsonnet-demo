@@ -1,0 +1,50 @@
+{
+   "provider": {
+      "postgresql": {
+         "connect_timeout": 15,
+         "database": "postgres",
+         "host": "172.18.8.101",
+         "password": "postgres",
+         "port": 30002,
+         "sslmode": "disable",
+         "username": "postgres"
+      }
+   },
+   "resource": {
+      "postgresql_database": {
+         "my_db": {
+            "allow_connections": true,
+            "name": "my_db"
+         }
+      },
+      "postgresql_role": {
+         "app_db": {
+            "name": "app_db"
+         },
+         "app_releng": {
+            "name": "app_releng"
+         },
+         "app_www": {
+            "name": "app_www"
+         }
+      },
+      "postgresql_schema": {
+         "name": "my_schema",
+         "owner": "postgres",
+         "policy": {
+            "app_www": {
+               "role": "app_www",
+               "usage": true
+            }
+         }
+      }
+   },
+   "terraform": {
+      "required_providers": {
+         "postgresql": {
+            "source": "cyrilgdn/postgresql",
+            "version": "1.15.0"
+         }
+      }
+   }
+}
