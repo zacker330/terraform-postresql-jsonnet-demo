@@ -7,6 +7,9 @@ terraform {
       version = "1.15.0"
     }
   }
+  backend "pg" {
+    conn_str = "postgres://postgres:postgres@127.0.0.1:5432/terraform_backend?sslmode=disable"
+  }
 }
 
 provider "postgresql" {
@@ -32,7 +35,7 @@ resource "postgresql_role" "app_releng" {
 }
 
 resource "postgresql_schema" "my_schema" {
-  name = "my_schema"
+  name = "my_schem1a"
   owner = "postgres"
 
   policy {
