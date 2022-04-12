@@ -10,8 +10,8 @@ terraform {
 }
 
 provider "postgresql" {
-  host            = "172.18.8.101"
-  port            = 30002
+  host            = "127.0.0.1"
+  port            = 5432
   database        = "postgres"
   username        = "postgres"
   password        = "postgres"

@@ -10,8 +10,8 @@ local secrets = import "secrets.libsonnet";
    },
     provider: {
         "postgresql": {
-          host            :"172.18.8.101",
-          port            : 30002,
+          host            :"127.0.0.1",
+          port            : 5432,
           database        :"postgres",
           username        : secrets.postgresql.auth.username,
           password        :secrets.postgresql.auth.password,
@@ -38,29 +38,24 @@ local secrets = import "secrets.libsonnet";
              }
          },
          postgresql_schema: {
-              name: "my_schema",
-              owner: "postgres",
-              policy: {
-                app_www: {
-                  usage: true,
-                  role: "app_www"
-                }
-              }
-//                {
-//                    usage: true,
-//                    role: "${postgresql_role.app_www.name}"
-//                },{
-//                    usage: true,
-//                    role: "${postgresql_role.app_www.name}"
-//                },{
-//                    create: true,
-//                    usage: true,
-//                    role: "${postgresql_role.app_releng.name}"
-//                  },{
-//                    create_with_grant: true,
-//                    usage_with_grant: true,
-//                    role: "${postgresql_role.app_dba.name}"
-//                  }
+             my_schema:{
+                name: "my_schema",
+                owner: "postgres",
+                policy: [{
+                   usage: true,
+                   role: "${postgresql_role.app_www.name}"
+               },{
+                   create: true,
+                   usage: true,
+                   role: "${postgresql_role.app_releng.name}"
+                 },{
+                   create_with_grant: true,
+                   usage_with_grant: true,
+                   role: "${postgresql_role.app_db.name}"
+                 }
+                ],
+              },
+
 //              ]
          }
     }

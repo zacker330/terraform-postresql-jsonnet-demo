@@ -3,9 +3,9 @@
       "postgresql": {
          "connect_timeout": 15,
          "database": "postgres",
-         "host": "172.18.8.101",
+         "host": "127.0.0.1",
          "password": "postgres",
-         "port": 30002,
+         "port": 5432,
          "sslmode": "disable",
          "username": "postgres"
       }
@@ -29,13 +29,25 @@
          }
       },
       "postgresql_schema": {
-         "name": "my_schema",
-         "owner": "postgres",
-         "policy": {
-            "app_www": {
-               "role": "app_www",
-               "usage": true
-            }
+         "my_schema": {
+            "name": "my_schema",
+            "owner": "postgres",
+            "policy": [
+               {
+                  "role": "${postgresql_role.app_www.name}",
+                  "usage": true
+               },
+               {
+                  "create": true,
+                  "role": "${postgresql_role.app_releng.name}",
+                  "usage": true
+               },
+               {
+                  "create_with_grant": true,
+                  "role": "${postgresql_role.app_db.name}",
+                  "usage_with_grant": true
+               }
+            ]
          }
       }
    },
